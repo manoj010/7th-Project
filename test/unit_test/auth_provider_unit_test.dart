@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:food_recipe_final/src/models/user_model.dart';
 import 'package:food_recipe_final/src/providers/auth_provider.dart';
@@ -7,11 +7,11 @@ import 'package:mocktail/mocktail.dart';
 
 import 'user_provider_unit_test.dart';
 
-class MockFirebaseAuth extends Mock implements FirebaseAuth {}
+class MockFirebaseAuth extends Mock implements firebase.FirebaseAuth {}
 
 class MockFirebaseFirestore extends Mock implements FirebaseFirestore {}
 
-class MockUserCredential extends Mock implements UserCredential {}
+class MockUserCredential extends Mock implements firebase.UserCredential {}
 
 void main() {
   late AuthProvider authProvider;
@@ -73,7 +73,7 @@ void main() {
         when(() => mockFirebaseAuth.createUserWithEmailAndPassword(
               email: mockUserEmail,
               password: mockUserPassword,
-            )).thenThrow(FirebaseAuthException(code: 'weak-password'));
+            )).thenThrow(firebase.FirebaseAuthException(code: 'weak-password'));
 
         final result = await authProvider.signUpUser(
           userName: mockUserName,
@@ -93,7 +93,7 @@ void main() {
         when(() => mockFirebaseAuth.createUserWithEmailAndPassword(
               email: mockUserEmail,
               password: mockUserPassword,
-            )).thenThrow(FirebaseAuthException(code: 'email-already-in-use'));
+            )).thenThrow(firebase.FirebaseAuthException(code: 'email-already-in-use'));
 
         final result = await authProvider.signUpUser(
             userName: 'testuser',
@@ -111,7 +111,7 @@ void main() {
             email: invalidEmail,
             password: any(named: 'password'),
           ),
-        ).thenThrow(FirebaseAuthException(code: 'invalid-email'));
+        ).thenThrow(firebase.FirebaseAuthException(code: 'invalid-email'));
 
         final result = await authProvider.signUpUser(
             userName: 'Test User',
@@ -148,7 +148,7 @@ void main() {
         when(() => mockFirebaseAuth.signInWithEmailAndPassword(
               email: mockUserEmail,
               password: mockUserPassword,
-            )).thenThrow(FirebaseAuthException(code: 'wrong-password'));
+            )).thenThrow(firebase.FirebaseAuthException(code: 'wrong-password'));
 
         final result = await authProvider.logInUser(
           userEmail: mockUserEmail,
@@ -167,7 +167,7 @@ void main() {
         when(() => mockFirebaseAuth.signInWithEmailAndPassword(
               email: mockUserEmail,
               password: mockUserPassword,
-            )).thenThrow(FirebaseAuthException(code: 'user-not-found'));
+            )).thenThrow(firebase.FirebaseAuthException(code: 'user-not-found'));
 
         final result = await authProvider.logInUser(
           userEmail: mockUserEmail,
@@ -185,7 +185,7 @@ void main() {
         when(() => mockFirebaseAuth.signInWithEmailAndPassword(
               email: mockUserEmail,
               password: mockUserPassword,
-            )).thenThrow(FirebaseAuthException(code: 'invalid-email'));
+            )).thenThrow(firebase.FirebaseAuthException(code: 'invalid-email'));
 
         final result = await authProvider.logInUser(
           userEmail: mockUserEmail,
@@ -232,7 +232,7 @@ void main() {
         String mockEmail = 'test@test.com';
 
         when(() => mockAuth.sendPasswordResetEmail(email: mockEmail))
-            .thenThrow(FirebaseAuthException(code: 'user-not-found'));
+            .thenThrow(firebase.FirebaseAuthException(code: 'user-not-found'));
         final result = await authProvider.forgetPassword(email: mockEmail);
         expect(result, equals('User is not registered.'));
       });

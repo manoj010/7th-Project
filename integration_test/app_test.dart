@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -55,19 +55,19 @@ void main() async {
           lazy: false,
           create: (context) => MessageProvider(
             FirebaseFirestore.instance,
-            FirebaseAuth.instance,
+            firebase.FirebaseAuth.instance,
           ),
         ),
         ChangeNotifierProvider<UserProvider>(
           lazy: false,
           create: (context) => UserProvider(
             FirebaseFirestore.instance,
-            FirebaseAuth.instance,
+            firebase.FirebaseAuth.instance,
           ),
         ),
         ChangeNotifierProvider<UserImageProvider>(
           create: (context) => UserImageProvider(
-            FirebaseAuth.instance,
+            firebase.FirebaseAuth.instance,
             FirebaseStorage.instance,
           ),
         ),
@@ -84,7 +84,7 @@ void main() async {
         ChangeNotifierProvider(
           lazy: false,
           create: (context) => AuthProvider(
-            FirebaseAuth.instance,
+            firebase.FirebaseAuth.instance,
             FirebaseFirestore.instance,
           ),
         ),
@@ -226,7 +226,7 @@ void main() async {
     expect(find.text('Error'), findsOneWidget);
     await tester.pumpAndSettle();
 
-    expect(FirebaseAuth.instance.currentUser, isNull);
+    expect(firebase.FirebaseAuth.instance.currentUser, isNull);
     await tester.pumpAndSettle();
   });
   // //!: Login tests

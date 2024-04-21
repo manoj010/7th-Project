@@ -1,6 +1,5 @@
 import 'dart:ui';
-
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:food_recipe_final/src/features/create_recipe_post/screens/add_recipe_post_screen.dart';
@@ -45,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
     getUserData();
   }
 
-  static User? auth = FirebaseAuth.instance.currentUser;
+  static firebase.User? auth = firebase.FirebaseAuth.instance.currentUser;
   List<Widget> pages = [
     const FeedScreen(),
     const SearchRecipeScreen(),

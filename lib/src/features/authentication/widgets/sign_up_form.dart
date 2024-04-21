@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:food_recipe_final/core/app_pages.dart';
@@ -300,7 +300,7 @@ class _SignupFormState extends State<SignupForm> {
                             userPassword: widget.passwordController.text,
                           );
                           if (output == null) {
-                            FirebaseAuth.instance.signOut();
+                            firebase.FirebaseAuth.instance.signOut();
                             navigator.pushNamed(AppPages.loginPath);
                           }
                           if (mounted) {
